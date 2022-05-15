@@ -1,0 +1,53 @@
+<!-- First tutorial for VUE 2.0 -->
+<!DOCTYPE html>
+<html>
+    <head>
+        <!-- <meta name="viewport" content="width=device-width, "> -->
+        <title>Product App</title>
+        <link rel="stylesheet" type="text/css" href="style.css">
+    </head>
+    <body>
+
+        <div class="nav-bar"></div>
+
+        <div id="app">
+            <div class="product">
+                <div class="product-image">
+                    <img v-bind:src="image" :alt="altText"/>
+                </div>
+                <div class="product-info">
+                    <h1> {{ title }} </h1>
+                    <p> {{ description }} </p>
+                    <p v-show="onSale">On sale!</p>
+                    <p v-if="inStock > 10">In stock</p>
+                    <p v-else-if="inStock <= 10 && inStock > 0">Almost out of stock</p>
+                    <p v-else>Out of stock</p>
+                    <p>Item description:</p>
+                    <ul>
+                        <li v-for="detail in details"> {{ detail }} </li>
+                    </ul>
+                    <p>Item variants:</p>
+                    <div class="flex-box">
+                        <div class="color-box" v-for="(variant, index) in variants" :key="variant.variantId"
+                             :style="{backgroundColor: variant.variantColor}" @mouseover="updateProduct(index)">
+                        </div>
+                    </div>
+                    <p>Sizes:</p>
+                    <ul>
+                        <li v-for="size in sizes"> {{ size }} </li>
+                    </ul>
+                    <div class="cart">
+                        <p>Cart({{ cart }})</p>
+                        <button v-on:click="addToCart" :disabled="!inStock" :class="{ disabledButton: !inStock }">Add to cart</button>
+                        <button v-on:click="removeFromCart" :disabled="cart == 0" :class="{ disabledButton: cart == 0 }">Reduce cart</button>
+                    </div>
+                </div>
+                <a :href="link" target="_blank">More products like this</a>
+            </div>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+        <script src="main.js"></script>
+
+    </body>
+</html>
